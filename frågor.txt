@@ -1,0 +1,100 @@
+När använder man add respektive commit?
+Svar:
+"add" används när man vill att en fil eller filer ska ingå i nästa commit. 
+Om det är en eller flera filer signalerar man med "git add "<filnamn>" eller "." 
+"commit" används när ändringarna som lagts till med "add" ska slutföras man använder "git commit -m" med ett medelande.
+
+Vad är pull repektive push?
+Svar:
+"pull" används för att hämta senaste commit:en från ett repository.
+"push" används för att skicka senaste commit:en till ett repository. 
+
+När använder man log respektive status?
+Svar:
+"log" används för att se historiska commit:s samt commit-nummer. och se villken commit som ligger i HEAD.
+"status" används för att se branchen man är i och sin staging-area där kan man se vilka filer man ändrat i
+ men som inte är staged och vilka som är staged och redo att comittas.
+
+Hur kan man formulera sig i sina commit-meddelanden?
+Svar: 
+Man ska formulera sig så att man känner igen förändringen man gjort i filen så att man lätt kan gå tillbaka 
+om man vill t.ex börja om eller om senare ändringar inte fungerat som man tänkt. Exempel: git commit -m "created file Game.java"
+
+Vilka sätt använder man till att rulla tillbaka koden till ett tidigare tillstånd?
+Svar:
+För att rulla tillbaka anväder man git checkout, reset och revert.
+
+Checkout och reset används när du vill rulla tillbaka lokalt och revert används publikt. 
+
+"git checkout" används för att antingen ångra ändringar i specifika filer och byta branch samt kolla på äldre commits (snapshot).
+
+"git reset" används för att plocka bort filer som ligger i en privat "stage"  dom man kan också hoppa tillbaka en commit default(git reset). 
+Ta bort commits permanent (git reset --hard). Du kan välja att gå tillbaka till innan dina tidigare commits och ändra sedan commita igen (git reset --soft).
+
+"git revert" används för att arbeta med en tidigare commit utan att ta bort commits som commitats senare. 
+Istället för att ta bort den senare commitsen så skapar den en ny commit med den valda committen som utgångsläge detta är bra då förlorar vi ingen historik.
+
+
+Checkout 
+Exempel: 
+svenor@space-face:~/testgit$ git status
+On branch master
+Changes not staged for commit:
+  (use "git add <file>..." to update what will be committed)
+  (use "git checkout -- <file>..." to discard changes in working directory)
+
+        modified:   Hello.java
+
+no changes added to commit (use "git add" and/or "git commit -a")
+svenor@space-face:~/testgit$ git checkout Hello.java
+svenor@space-face:~/testgit$ git status
+On branch master
+nothing to commit, working tree clean
+svenor@space-face:~/testgit$
+
+
+Reset
+Exempel: 
+svenor@space-face:~/testgit$ git reset --soft HEAD~1  
+svenor@space-face:~/testgit$ git log --oneline 
+6a4ffc6 (HEAD -> test) Do stuff      
+603a1f5 add gitignore                                                                         
+8512869 add the list of countries                                                             
+3ff18f9 creating Hello.java                                                                   
+svenor@space-face:~/testgit$ git checkout master                                              
+A       todo.txt                                                                             
+Switched to branch 'master'                                                                   
+svenor@space-face:~/testgit$ git log --oneline                                                
+171bcc6 (HEAD -> master) Revert "Revert "Do stuff""                                          
+89a391f Revert "Do stuff"                                                                     
+6a4ffc6 (test) Do stuff                                                                       
+603a1f5 add gitignore                                                                         
+8512869 add the list of countries                                                             
+3ff18f9 creating Hello.java 
+svenor@space-face:~/testgit$ 
+
+Revert
+Exempel: 
+svenor@space-face:~/testgit$ git revert HEAD                                                 
+[test 679be4c] Revert "add cool.txt"                                                           
+1 file changed, 1 deletion(-)                                                                 
+delete mode 100644 cool.txt                                                                  
+svenor@space-face:~/testgit$ git log --oneline                                                
+679be4c (HEAD -> test) Revert "add cool.txt"                                                  
+c53c0fc (master) add cool.txt                                                                 
+171bcc6 Revert "Revert "Do stuff""                                                            
+89a391f Revert "Do stuff"                                                                     
+6a4ffc6 Do stuff                                                                              
+603a1f5 add gitignore                                                                         
+8512869 add the list of countries                                                             
+3ff18f9 creating Hello.java                                                                   
+svenor@space-face:~/testgit$ git checkout master                                              
+Switched to branch 'master'                                                                   
+svenor@space-face:~/testgit$ git log --oneline                                                
+c53c0fc (HEAD -> master) add cool.txt                                                         
+171bcc6 Revert "Revert "Do stuff""                                                            
+89a391f Revert "Do stuff"                                                                     
+6a4ffc6 Do stuff                                                                              
+603a1f5 add gitignore                                                                         
+8512869 add the list of countries                                                             
+3ff18f9 creating Hello.java                                                                   
