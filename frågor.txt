@@ -1,3 +1,5 @@
+Daniel Nord satsar på VG!
+
 När använder man add respektive commit?
 Svar:
 "add" används när man vill att en fil eller filer ska ingå i nästa commit. 
@@ -22,11 +24,9 @@ om man vill t.ex börja om eller om senare ändringar inte fungerat som man tän
 
 Vilka sätt använder man till att rulla tillbaka koden till ett tidigare tillstånd?
 Svar:
-För att rulla tillbaka anväder man git checkout, reset och revert.
+För att rulla tillbaka anväder man git reset och revert.
 
-Checkout och reset används när du vill rulla tillbaka lokalt och revert används publikt. 
-
-"git checkout" används för att antingen ångra ändringar i specifika filer och byta branch samt kolla på äldre commits (snapshot).
+Reset används när du vill rulla tillbaka lokalt och revert används publikt. 
 
 "git reset" används för att plocka bort filer som ligger i en privat "stage"  dom man kan också hoppa tillbaka en commit default(git reset). 
 Ta bort commits permanent (git reset --hard). Du kan välja att gå tillbaka till innan dina tidigare commits och ändra sedan commita igen (git reset --soft).
@@ -34,23 +34,6 @@ Ta bort commits permanent (git reset --hard). Du kan välja att gå tillbaka til
 "git revert" används för att arbeta med en tidigare commit utan att ta bort commits som commitats senare. 
 Istället för att ta bort den senare commitsen så skapar den en ny commit med den valda committen som utgångsläge detta är bra då förlorar vi ingen historik.
 
-
-Checkout 
-Exempel: 
-svenor@space-face:~/testgit$ git status
-On branch master
-Changes not staged for commit:
-  (use "git add <file>..." to update what will be committed)
-  (use "git checkout -- <file>..." to discard changes in working directory)
-
-        modified:   Hello.java
-
-no changes added to commit (use "git add" and/or "git commit -a")
-svenor@space-face:~/testgit$ git checkout Hello.java
-svenor@space-face:~/testgit$ git status
-On branch master
-nothing to commit, working tree clean
-svenor@space-face:~/testgit$
 
 
 Reset
